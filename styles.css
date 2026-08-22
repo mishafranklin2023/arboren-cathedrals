@@ -1,0 +1,227 @@
+/* ===== Theme B: Blueprint (Logo Palette) — drafting table / engineering diagram feel =====
+   Palette sourced directly from the ArbCatioLogo.png artwork:
+     pitch-black      #151500  (near-black, olive-tinted)
+     palm-leaf        #728A50  (muted sage green)
+     red-ochre        #C93E0C  (burnt orange-red)
+     dark-spruce      #1A4F1A  (deep forest green)
+     olive-wood       #8B774F  (warm tan/khaki)
+     bitter-chocolate #6D4040  (muted brown-red)
+   pitch-black + palm-leaf give the best background/text contrast pair (~4.8:1),
+   so those two anchor the page background and body text. */
+:root {
+  --pitch-black: #151500;
+  --palm-leaf: #728A50;
+  --red-ochre: #C93E0C;
+  --dark-spruce: #1A4F1A;
+  --olive-wood: #8B774F;
+  --bitter-chocolate: #6D4040;
+
+  --bg: var(--olive-wood);
+  --bg-alt: var(--dark-spruce);
+  --text: var(--pitch-black);
+  --text-on-dark: var(--olive-wood);
+  --heading-font: 'Consolas', 'Courier New', monospace;
+  --body-font: 'Segoe UI', Tahoma, sans-serif;
+  --accent: var(--palm-leaf);
+  --accent-2: var(--red-ochre);
+  --cta: var(--bitter-chocolate);
+  --card-bg: var(--dark-spruce);
+  --card-border: var(--olive-wood);
+  --radius: 4px;
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  --wobble-speed: 3.6s;
+
+  /* Tuxedo cat palette (black & white, amber eyes, pink nose) — kept as the mascot's
+     established brand identity, independent of the site's structural palette */
+  --cat-fur-dark: #16202c;
+  --cat-fur-light: #f3f8fd;
+  --cat-ear-inner: #f6c9d6;
+  --cat-eye: #ffb454;
+  --cat-eye-pupil: #16202c;
+  --cat-eye-shine: #ffffff;
+  --cat-mouth: #16202c;
+  --cat-nose: #f78fae;
+  --cat-tail: #16202c;
+  --cat-whisker: #dbfbe9;
+  --cat-paw: #f3f8fd;
+  --cat-shadow: rgba(0, 0, 0, 0.3);
+
+  --hardhat: var(--red-ochre);
+  --hardhat-brim: var(--bitter-chocolate);
+  --tool-handle: var(--bitter-chocolate);
+  --tool-head: var(--olive-wood);
+  --glasses-color: var(--cat-fur-dark);
+  --blueprint-fill: var(--pitch-black);
+  --blueprint-stroke: var(--olive-wood);
+  --blueprint-line: var(--olive-wood);
+
+  --btn-primary-bg: var(--bitter-chocolate);
+  --btn-primary-text: #000000;
+  --btn-secondary-bg: var(--bitter-chocolate);
+  --btn-secondary-text: #000000;
+  --btn-secondary-border: var(--bitter-chocolate);
+
+  --press-overlay: rgba(21, 21, 0, 0.39);
+
+  --header-bg: var(--olive-wood);
+  --header-text: var(--pitch-black);
+}
+
+/* Grid-paper / blueprint background texture — off-white lines on the
+   olive-wood sections, sage green lines on the dark-spruce sections.
+   Gridlines are 0.5px (50% thinner than a standard 1px line) for the
+   Hero, Gallery ("The Bridges & Builds"), and Contact ("Let's Build
+   Something...") sections, which all show this shared body background
+   through. */
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.18) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0.5px, transparent 0.5px);
+  background-size: 28px 28px;
+}
+
+.about,
+.site-footer,
+.services {
+  background-image:
+    linear-gradient(rgba(114, 138, 80, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(114, 138, 80, 0.18) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* "What Thom Builds" gets the dark-spruce treatment like About/Footer */
+.services {
+  background-color: var(--bg-alt);
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+h1, h2, h3 { letter-spacing: 0.02em; }
+
+.eyebrow { color: var(--cta); }
+
+.services-note a { color: var(--accent-2); }
+
+.gallery-card, .service-card, .press-card, .contact-form {
+  border-style: dashed;
+}
+
+.photo-placeholder { border-style: solid; }
+
+/* Blueprint illustration cards retired in favor of the real-photo carousel below */
+.gallery-grid { display: none; }
+
+.site-header { border-bottom: 1px solid #000000; backdrop-filter: none; }
+
+/* --bg / --bg-alt are opposite ends of the light/dark scale (olive-wood vs
+   dark-spruce), so anything sitting on the dark card/alt surfaces needs the
+   light --text-on-dark color instead of the page's default dark --text. */
+.about,
+.site-footer,
+.services,
+.press-inner,
+.gallery-card,
+.service-card,
+.contact-form,
+.carousel-slide,
+.carousel-btn {
+  color: var(--text-on-dark);
+}
+
+/* Bridge blueprint illustrations */
+.photo-placeholder.blueprint-frame {
+  border-style: solid;
+  padding: 0.5rem;
+  background: var(--card-bg);
+}
+
+.blueprint-diagram rect.bp-border {
+  fill: none;
+  stroke: var(--blueprint-stroke);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+.blueprint-diagram .bp-title {
+  fill: var(--blueprint-stroke);
+  font-family: var(--heading-font);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+}
+
+.blueprint-diagram .bp-subtitle {
+  fill: var(--blueprint-line);
+  font-family: var(--heading-font);
+  font-size: 6px;
+  opacity: 0.8;
+}
+
+.blueprint-diagram .bp-line {
+  fill: none;
+  stroke: var(--blueprint-line);
+  stroke-width: 1.6;
+}
+
+.blueprint-diagram .bp-hanger {
+  stroke: var(--blueprint-line);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+  opacity: 0.75;
+}
+
+.blueprint-diagram .bp-dim {
+  stroke: var(--accent-2);
+  stroke-width: 1;
+  fill: none;
+}
+
+.blueprint-diagram .bp-dim-text {
+  fill: var(--accent-2);
+  font-family: var(--heading-font);
+  font-size: 6.5px;
+}
+
+.blueprint-diagram .bp-stamp-ring {
+  fill: none;
+  stroke: var(--accent-2);
+  stroke-width: 1.2;
+}
+
+.blueprint-diagram .bp-stamp-text {
+  fill: var(--accent-2);
+  font-family: var(--heading-font);
+  font-size: 5px;
+}
+
+.blueprint-diagram .bp-paw { fill: var(--accent-2); }
+
+.blueprint-diagram .bp-finial {
+  fill: var(--blueprint-line);
+  stroke: none;
+}
+
+/* Hero blueprint watermark — breaks out of the hero's max-width container
+   to span the full page/viewport width, behind the content */
+.hero {
+  position: relative;
+  overflow: visible;
+}
+
+.hero-blueprint-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: auto;
+  max-width: none;
+  opacity: 0.16;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-text, .hero-art {
+  position: relative;
+  z-index: 1;
+}
