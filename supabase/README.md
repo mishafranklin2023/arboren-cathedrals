@@ -2,6 +2,8 @@
 
 The contact form on the site posts submissions into a Supabase table, and a
 Supabase Edge Function emails Thom via Resend whenever a new one arrives.
+Everything below can be done entirely from the Supabase and Resend web
+dashboards — no CLI or local Node.js install required.
 
 ## 1. Create the Supabase project
 
@@ -16,7 +18,16 @@ Supabase Edge Function emails Thom via Resend whenever a new one arrives.
 1. In the project dashboard, open **SQL Editor** -> **New query**.
 2. Paste in the contents of `supabase/schema.sql` (in this repo) and run it.
    This creates a `contact_submissions` table with Row Level Security so the
-   public website can only *insert* rows — not read, edit, or delete them.
+   public website can only *insert* rows — not read, edit, or delete them —
+   **and** grants the `anon` role table-level `INSERT` privilege.
+
+   > **Why the explicit `GRANT` matters:** Supabase does NOT auto-grant table
+   > access for tables created via the SQL editor. An RLS policy alone is not
+   > enough — without the `grant insert on public.contact_submissions to
+   > anon;` line at the bottom of `schema.sql`, every submission fails with
+   > `42501 permission denied for table contact_submissions`, even though the
+   > policy looks correct. If you ever see that error, re-run just that one
+   > `grant` statement in the SQL Editor.
 
 ## 3. Connect the site to Supabase
 
@@ -28,7 +39,7 @@ Supabase Edge Function emails Thom via Resend whenever a new one arrives.
    const SUPABASE_ANON_KEY = 'eyJ...';
    ```
    The anon key is meant to be public/client-side — it can only do what the
-   RLS policy in step 2 allows (insert-only).
+   RLS policy + grant in step 2 allow (insert-only).
 4. Reload the site and submit the form — you should see the new row show up
    under **Table Editor -> contact_submissions** in the dashboard.
 
@@ -38,33 +49,53 @@ Steps 4-6 below add the *email notification* on top of that.
 ## 4. Create a Resend account
 
 1. Go to https://resend.com and sign up (free tier: 3,000 emails/month, 100/day).
-2. Under **API Keys**, create a new key and copy it.
-3. (Optional but recommended) Under **Domains**, verify your own domain so
-   emails send from `you@yourdomain.com` instead of Resend's shared test
-   domain. You can skip this at first and use the default
-   `onboarding@resend.dev` sender to get started quickly.
+2. Under **API Keys**, create a new key and copy it (you'll only see it once).
+3. (Optional but recommended) Under **Domains**, add & verify your own domain
+   (e.g. `arborencathedrals.com`) so emails send from
+   `notifications@arborencathedrals.com` instead of Resend's shared test
+   domain. This adds a few SPF/DKIM DNS records — straightforward once the
+   domain's DNS is on Cloudflare. You can skip this at first and use the
+   default `onboarding@resend.dev` sender to get started quickly, then switch
+   later by just updating the `NOTIFY_FROM_EMAIL` secret (no redeploy of code
+   needed).
 
-## 5. Deploy the notify-contact Edge Function
+## 5. Deploy the notify-contact Edge Function (via the Supabase Dashboard)
 
-This requires the Supabase CLI. From this project folder:
+1. In your Supabase project, go to **Edge Functions** in the sidebar.
+2. Click **Deploy a new function** -> **Via Editor**.
+3. Name it exactly `notify-contact` (the webhook in step 6 calls it by name).
+4. Replace the template code with the contents of
+   `supabase/functions/notify-contact/index.ts` from this repo.
+5. Click **Deploy function**.
 
-```
-npm install -g supabase
-supabase login
-supabase link --project-ref <your-project-ref>   # found in Project Settings -> General
-supabase functions deploy notify-contact
-supabase secrets set RESEND_API_KEY=re_your_key_here
-supabase secrets set NOTIFY_TO_EMAIL=thom@example.com
-```
+Then set the secrets it needs — still under **Edge Functions**, open
+**Secrets** (or **Manage secrets**) and add:
 
-(`NOTIFY_FROM_EMAIL` is optional — defaults to Resend's shared test address.)
+| Secret | Value |
+|---|---|
+| `RESEND_API_KEY` | the key from step 4 |
+| `NOTIFY_TO_EMAIL` | Thom's real inbox, e.g. `thom@arborencathedrals.com` |
+| `NOTIFY_FROM_EMAIL` | `Arboren CAThedrals <onboarding@resend.dev>` for now, or your verified domain sender once set up (optional — defaults to Resend's shared test address if omitted) |
+
+Secrets are shared across all Edge Functions in the project.
+
+> **Prefer the CLI?** You can also deploy with
+> `supabase functions deploy notify-contact` and
+> `supabase secrets set RESEND_API_KEY=...` if you have the Supabase CLI and
+> Node.js installed locally — the Dashboard editor above is just the
+> no-install alternative used for this project.
 
 ## 6. Wire up the trigger
 
 1. In the Supabase dashboard, go to **Database -> Webhooks -> Create a new hook**.
 2. Table: `contact_submissions`. Event: `Insert`.
 3. Type: **Supabase Edge Functions**, and select `notify-contact`.
-4. Save. Submit the contact form again — you should get an email.
+4. Save. Submit the contact form again — you should get an email within a
+   few seconds.
+
+If the email doesn't arrive, check **Edge Functions -> notify-contact ->
+Logs** in the dashboard — the function logs an error on both missing secrets
+and Resend API failures, so the exact cause will show up there.
 
 ## Viewing / managing submissions
 

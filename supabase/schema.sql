@@ -21,3 +21,10 @@ create policy "Anyone can submit the contact form"
   for insert
   to anon
   with check (true);
+
+-- RLS policies alone are NOT enough — Supabase does not auto-grant table
+-- privileges for tables created outside the dashboard UI. The anon role
+-- also needs an explicit table-level GRANT, or every insert fails with
+-- "42501 permission denied for table contact_submissions" even though the
+-- policy above allows it.
+grant insert on public.contact_submissions to anon;
