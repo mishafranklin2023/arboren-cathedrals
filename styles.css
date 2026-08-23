@@ -58,8 +58,9 @@
   --btn-primary-bg: var(--bitter-chocolate);
   --btn-primary-text: #000000;
   --btn-secondary-bg: var(--bitter-chocolate);
-  --btn-secondary-text: #000000;
+  --btn-secondary-text: var(--red-ochre);
   --btn-secondary-border: var(--bitter-chocolate);
+  --btn-text-active: #000000;
 
   --press-overlay: rgba(21, 21, 0, 0.39);
 
@@ -76,8 +77,8 @@
 body {
   background-color: var(--bg);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.18) 0.5px, transparent 0.5px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0.5px, transparent 0.5px);
+    linear-gradient(rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px);
   background-size: 28px 28px;
 }
 
@@ -85,8 +86,8 @@ body {
 .site-footer,
 .services {
   background-image:
-    linear-gradient(rgba(114, 138, 80, 0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(114, 138, 80, 0.18) 1px, transparent 1px);
+    linear-gradient(rgba(114, 138, 80, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(114, 138, 80, 0.09) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
@@ -97,7 +98,7 @@ body {
   padding-bottom: 4rem;
 }
 
-h1, h2, h3 { letter-spacing: 0.02em; }
+h1, h2, h3 { letter-spacing: 0.02em; text-transform: lowercase; }
 
 .eyebrow { color: var(--cta); }
 
@@ -201,27 +202,33 @@ h1, h2, h3 { letter-spacing: 0.02em; }
   stroke: none;
 }
 
-/* Hero blueprint watermark — breaks out of the hero's max-width container
-   to span the full page/viewport width, behind the content */
 .hero {
   position: relative;
   overflow: visible;
 }
 
-.hero-blueprint-bg {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100%;
-  width: auto;
-  max-width: none;
-  opacity: 0.16;
-  z-index: 0;
-  pointer-events: none;
-}
-
 .hero-text, .hero-art {
   position: relative;
   z-index: 1;
+}
+
+/* Button text: black by default on primary CTAs ("See Catio Gallery"),
+   red-ochre on secondary buttons ("Contact Thom"). The contact form's "Send
+   to Thom" button and the press section's "Tour Tickets & Info" button are
+   primary-styled but contact/ticket-related, so they keep red-ochre text.
+   The "Read the Article" press links are secondary-styled but keep black
+   text instead of the usual secondary red-ochre. Any button goes black
+   while pressed or disabled (sending). */
+.contact-form .btn-primary,
+.press-note-cta .btn-primary {
+  color: var(--btn-secondary-text);
+}
+
+.press-card > .btn-secondary {
+  color: var(--btn-text-active);
+}
+
+.btn:active,
+.btn:disabled {
+  color: var(--btn-text-active);
 }

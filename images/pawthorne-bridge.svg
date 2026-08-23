@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" role="img" aria-label="Blueprint diagram of the Pawthorne Bridge, a vertical lift span">
+  <defs>
+    <pattern id="pawthorne-grid" width="14" height="14" patternUnits="userSpaceOnUse">
+      <path d="M 14 0 L 0 0 0 14" fill="none" stroke="#F4F1E8" stroke-width="0.4" opacity="0.18" />
+    </pattern>
+  </defs>
+  <style>
+    .bg { fill: #476C9B; }
+    .bp-border { fill: none; stroke: #F4F1E8; stroke-width: 1.75; stroke-dasharray: 4 3; }
+    .bp-title { fill: #F4F1E8; font-family: Consolas, 'Courier New', monospace; font-size: 9px; letter-spacing: 0.04em; }
+    .bp-subtitle { fill: #F4F1E8; font-family: Consolas, 'Courier New', monospace; font-size: 6px; opacity: 0.9; }
+    .bp-line { fill: none; stroke: #F4F1E8; stroke-width: 1.9; }
+    .bp-dim { stroke: #C93E0C; stroke-width: 1; fill: none; }
+    .bp-dim-text { fill: #C93E0C; font-family: Consolas, 'Courier New', monospace; font-size: 6.5px; }
+    .bp-stamp-ring { fill: none; stroke: #C93E0C; stroke-width: 1.2; }
+    .bp-stamp-text { fill: #C93E0C; font-family: Consolas, 'Courier New', monospace; font-size: 5px; text-anchor: middle; }
+    .bp-paw { fill: #C93E0C; }
+  </style>
+  <rect class="bg" x="1" y="1" width="278" height="218" rx="4" />
+  <rect x="4" y="4" width="272" height="212" fill="url(#pawthorne-grid)" />
+  <rect class="bp-border" x="4" y="4" width="272" height="212" />
+  <text class="bp-title" x="14" y="24">PAWTHORNE BRIDGE</text>
+  <text class="bp-subtitle" x="14" y="34">SHEET 01 &#8212; VERTICAL LIFT SPAN</text>
+  <!-- left lift tower: twin ladder-style legs, like Hawthorne's real guide towers -->
+  <line class="bp-line" x1="68" y1="58" x2="68" y2="148" />
+  <line class="bp-line" x1="80" y1="58" x2="80" y2="148" />
+  <line class="bp-line" x1="68" y1="74" x2="80" y2="74" />
+  <line class="bp-line" x1="68" y1="90" x2="80" y2="90" />
+  <line class="bp-line" x1="68" y1="106" x2="80" y2="106" />
+  <line class="bp-line" x1="68" y1="122" x2="80" y2="122" />
+  <!-- right lift tower: twin ladder-style legs -->
+  <line class="bp-line" x1="200" y1="58" x2="200" y2="148" />
+  <line class="bp-line" x1="212" y1="58" x2="212" y2="148" />
+  <line class="bp-line" x1="200" y1="74" x2="212" y2="74" />
+  <line class="bp-line" x1="200" y1="90" x2="212" y2="90" />
+  <line class="bp-line" x1="200" y1="106" x2="212" y2="106" />
+  <line class="bp-line" x1="200" y1="122" x2="212" y2="122" />
+  <!-- machinery house spanning the tower tops -->
+  <rect class="bp-line" x="64" y="50" width="152" height="8" />
+  <!-- counterweight cables running up into the machinery house -->
+  <line class="bp-dim" x1="74" y1="58" x2="74" y2="134" />
+  <line class="bp-dim" x1="206" y1="58" x2="206" y2="134" />
+  <!-- truss lift-span deck between the towers -->
+  <path class="bp-line" d="M80 140 L90 132 L100 140 L110 132 L120 140 L130 132 L140 140 L150 132 L160 140 L170 132 L180 140 L190 132 L200 140" />
+  <line class="bp-line" x1="80" y1="148" x2="200" y2="148" />
+  <!-- approach spans -->
+  <line class="bp-line" x1="40" y1="148" x2="80" y2="148" />
+  <line class="bp-line" x1="200" y1="148" x2="240" y2="148" />
+  <line class="bp-dim" x1="40" y1="164" x2="240" y2="164" />
+  <text class="bp-dim-text" x="102" y="176">14'-0" LONG</text>
+  <circle class="bp-stamp-ring" cx="252" cy="174" r="15" />
+  <g class="bp-paw">
+    <ellipse cx="252" cy="178" rx="4.2" ry="3.6" />
+    <circle cx="246.5" cy="171" r="2" />
+    <circle cx="252" cy="168.5" r="2" />
+    <circle cx="257.5" cy="171" r="2" />
+  </g>
+  <text class="bp-stamp-text" x="252" y="200">APPROVED</text>
+</svg>

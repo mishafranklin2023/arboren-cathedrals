@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 220" role="img" aria-label="Blueprint diagram of the CAThedral Bridge, gothic arch towers with a suspension span">
+  <defs>
+    <pattern id="cathedral-grid" width="14" height="14" patternUnits="userSpaceOnUse">
+      <path d="M 14 0 L 0 0 0 14" fill="none" stroke="#F4F1E8" stroke-width="0.4" opacity="0.18" />
+    </pattern>
+  </defs>
+  <style>
+    .bg { fill: #476C9B; }
+    .bp-border { fill: none; stroke: #F4F1E8; stroke-width: 1.75; stroke-dasharray: 4 3; }
+    .bp-title { fill: #F4F1E8; font-family: Consolas, 'Courier New', monospace; font-size: 9px; letter-spacing: 0.04em; }
+    .bp-subtitle { fill: #F4F1E8; font-family: Consolas, 'Courier New', monospace; font-size: 6px; opacity: 0.9; }
+    .bp-line { fill: none; stroke: #F4F1E8; stroke-width: 1.9; }
+    .bp-hanger { stroke: #F4F1E8; stroke-width: 1; stroke-dasharray: 2 2; opacity: 0.8; }
+    .bp-dim { stroke: #C93E0C; stroke-width: 1; fill: none; }
+    .bp-dim-text { fill: #C93E0C; font-family: Consolas, 'Courier New', monospace; font-size: 6.5px; }
+    .bp-stamp-ring { fill: none; stroke: #C93E0C; stroke-width: 1.2; }
+    .bp-stamp-text { fill: #C93E0C; font-family: Consolas, 'Courier New', monospace; font-size: 5px; text-anchor: middle; }
+    .bp-paw { fill: #C93E0C; }
+    .bp-finial { fill: #F4F1E8; stroke: none; }
+  </style>
+  <rect class="bg" x="1" y="1" width="278" height="218" rx="4" />
+  <rect x="4" y="4" width="272" height="212" fill="url(#cathedral-grid)" />
+  <rect class="bp-border" x="4" y="4" width="272" height="212" />
+  <text class="bp-title" x="14" y="24">CATHEDRAL BRIDGE</text>
+  <text class="bp-subtitle" x="14" y="34">SHEET 03 &#8212; GOTHIC ARCH TOWERS</text>
+  <!-- left gothic cathedral tower: tall twin legs, stacked pointed arches -->
+  <line class="bp-line" x1="60" y1="58" x2="60" y2="148" />
+  <line class="bp-line" x1="72" y1="58" x2="72" y2="148" />
+  <path class="bp-line" d="M60 74 Q66 54 72 74" />
+  <path class="bp-line" d="M60 104 Q66 84 72 104" />
+  <circle class="bp-finial" cx="66" cy="52" r="2" />
+  <!-- right gothic cathedral tower -->
+  <line class="bp-line" x1="208" y1="58" x2="208" y2="148" />
+  <line class="bp-line" x1="220" y1="58" x2="220" y2="148" />
+  <path class="bp-line" d="M208 74 Q214 54 220 74" />
+  <path class="bp-line" d="M208 104 Q214 84 220 104" />
+  <circle class="bp-finial" cx="214" cy="52" r="2" />
+  <!-- main suspension cable + hangers -->
+  <path class="bp-line" d="M66 64 Q140 128 214 64" />
+  <line class="bp-hanger" x1="90" y1="91" x2="90" y2="148" />
+  <line class="bp-hanger" x1="115" y1="112" x2="115" y2="148" />
+  <line class="bp-hanger" x1="140" y1="122" x2="140" y2="148" />
+  <line class="bp-hanger" x1="165" y1="112" x2="165" y2="148" />
+  <line class="bp-hanger" x1="190" y1="91" x2="190" y2="148" />
+  <line class="bp-line" x1="40" y1="148" x2="240" y2="148" />
+  <line class="bp-dim" x1="40" y1="164" x2="240" y2="164" />
+  <text class="bp-dim-text" x="92" y="176">PORCH CONNECTOR</text>
+  <circle class="bp-stamp-ring" cx="252" cy="174" r="15" />
+  <g class="bp-paw">
+    <ellipse cx="252" cy="178" rx="4.2" ry="3.6" />
+    <circle cx="246.5" cy="171" r="2" />
+    <circle cx="252" cy="168.5" r="2" />
+    <circle cx="257.5" cy="171" r="2" />
+  </g>
+  <text class="bp-stamp-text" x="252" y="200">APPROVED</text>
+</svg>
