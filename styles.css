@@ -100,6 +100,8 @@ body {
 
 h1, h2, h3 { letter-spacing: 0.02em; text-transform: lowercase; }
 
+.hero h1 { text-transform: none; }
+
 .eyebrow { color: var(--cta); }
 
 .services-note a { color: var(--accent-2); }
@@ -231,4 +233,40 @@ h1, h2, h3 { letter-spacing: 0.02em; text-transform: lowercase; }
 .btn:active,
 .btn:disabled {
   color: var(--btn-text-active);
+}
+
+/* About section: full-bleed background photo with dark overlay for readability */
+.about {
+  position: relative;
+  background-image: url('Dave_Thom.avif');
+  background-size: cover;
+  background-position: center;
+}
+
+.about::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(21, 21, 0, 0.78);
+  z-index: 0;
+}
+
+.about h2,
+.about .about-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.about h2,
+.about-copy p {
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+}
+
+.about h2 {
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.85);
+}
+
+.about-blueprint-img {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
 }
