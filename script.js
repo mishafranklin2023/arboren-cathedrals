@@ -31,38 +31,85 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
-// Real Build Photos carousel
-const carousel = document.getElementById('buildCarousel');
-const carouselTrack = document.getElementById('carouselTrack');
-const carouselDots = document.getElementById('carouselDots');
+function initCarousel({ root, track, prevBtn, nextBtn, dotsContainer, visibleItems = () => 1, wrap = false, swipe = false, gap = 0 }) {
+  if (!root || !track || !prevBtn || !nextBtn) return;
 
-if (carousel && carouselTrack && carouselDots) {
-  const slides = Array.from(carouselTrack.children);
-  const prevBtn = carousel.querySelector('.carousel-prev');
-  const nextBtn = carousel.querySelector('.carousel-next');
+  const slides = Array.from(track.children);
   let current = 0;
-
-  slides.forEach((_, i) => {
+  let visible = 1;
+  let pointerStart = null;
+  const dots = dotsContainer ? slides.map((_, i) => {
     const dot = document.createElement('button');
     dot.type = 'button';
     dot.className = 'carousel-dot';
-    dot.setAttribute('aria-label', `Go to photo ${i + 1}`);
+    dot.setAttribute('aria-label', `Go to item ${i + 1}`);
     dot.addEventListener('click', () => goTo(i));
-    carouselDots.appendChild(dot);
-  });
-  const dots = Array.from(carouselDots.children);
+    dotsContainer.appendChild(dot);
+    return dot;
+  }) : [];
 
   function goTo(index) {
-    current = (index + slides.length) % slides.length;
-    carouselTrack.style.transform = `translateX(-${current * 100}%)`;
+    const maxIndex = Math.max(0, slides.length - visible);
+    current = wrap
+      ? (index + slides.length) % slides.length
+      : Math.min(Math.max(index, 0), maxIndex);
+    const slideWidth = slides[0] ? slides[0].offsetWidth : 0;
+    track.style.transform = `translateX(-${current * (slideWidth + gap)}px)`;
     dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+    prevBtn.disabled = !wrap && current === 0;
+    nextBtn.disabled = !wrap && current === maxIndex;
+  }
+
+  function updateLayout() {
+    visible = Math.min(slides.length, visibleItems());
+    const basis = gap
+      ? `calc((100% - ${(visible - 1) * gap}px) / ${visible})`
+      : `${100 / visible}%`;
+    slides.forEach((slide) => { slide.style.flexBasis = basis; });
+    goTo(current);
   }
 
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
 
-  goTo(0);
+  if (swipe) {
+    track.addEventListener('pointerdown', (event) => {
+      pointerStart = event.clientX;
+      track.setPointerCapture(event.pointerId);
+    });
+    track.addEventListener('pointerup', (event) => {
+      if (pointerStart === null) return;
+      const distance = event.clientX - pointerStart;
+      pointerStart = null;
+      if (Math.abs(distance) > 50) goTo(current + (distance < 0 ? 1 : -1));
+    });
+    track.addEventListener('pointercancel', () => { pointerStart = null; });
+  }
+
+  window.addEventListener('resize', updateLayout);
+  updateLayout();
 }
+
+const buildCarousel = document.getElementById('buildCarousel');
+initCarousel({
+  root: buildCarousel,
+  track: document.getElementById('carouselTrack'),
+  prevBtn: buildCarousel?.querySelector('.carousel-prev'),
+  nextBtn: buildCarousel?.querySelector('.carousel-next'),
+  dotsContainer: document.getElementById('carouselDots'),
+  wrap: true
+});
+
+const pressCarousel = document.getElementById('pressCarousel');
+initCarousel({
+  root: pressCarousel,
+  track: document.getElementById('pressTrack'),
+  prevBtn: pressCarousel?.querySelector('.press-prev'),
+  nextBtn: pressCarousel?.querySelector('.press-next'),
+  visibleItems: () => window.innerWidth <= 700 ? 1 : window.innerWidth <= 1200 ? 2 : 4,
+  swipe: true,
+  gap: 16
+});
 
 // Contact form submit -> Supabase
 const contactForm = document.getElementById('contactForm');

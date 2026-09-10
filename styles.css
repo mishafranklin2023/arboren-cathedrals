@@ -18,22 +18,22 @@
 
   --bg: var(--olive-wood);
   --bg-alt: var(--dark-spruce);
-  --text: var(--pitch-black);
-  --text-on-dark: var(--olive-wood);
+  --text: #000000;
+  --text-on-dark: #D5CAB4;
   --text-on-photo: #ffffff;
   --photo-text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
   --photo-heading-shadow: 0 3px 8px rgba(0, 0, 0, 0.85);
   --heading-font: 'Lucida Console', sans-serif;
   --body-font: 'Poppins', sans-serif;
   --body-size: 1.5rem;
-  --h1-size: 3rem;
-  --h2-size: 2.25rem;
-  --h3-size: 1.75rem;
+  --h1-size: 3.25rem;
+  --h2-size: 2.5rem;
+  --h3-size: 2rem;
   --h4-size: 1.5rem;
   --body-weight: 300;
-  --h1-weight: 600;
+  --h1-weight: 700;
   --h2-weight: 500;
-  --heading-weight: 500;
+  --heading-weight: 600;
   --accent: var(--palm-leaf);
   --accent-2: var(--red-ochre);
   --cta: var(--bitter-chocolate);
@@ -51,7 +51,7 @@
   --press-overlay: rgba(21, 21, 0, 0.39);
 
   --header-bg: var(--olive-wood);
-  --header-text: var(--pitch-black);
+  --header-text: var(--text);
 }
 
 /* Grid-paper / blueprint background texture — off-white lines on the
@@ -80,11 +80,18 @@ body {
   color: var(--text-on-dark);
 }
 
+.crew {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+}
+
 h1,
 h2,
-h3,
-h4 {
-  letter-spacing: 0.02em;
+h3 {
+  letter-spacing: 0.005em;
 }
 
 .eyebrow {
@@ -107,6 +114,11 @@ h4 {
 }
 
 .site-header {
+  background-color: var(--header-bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
   border-bottom: 1px solid #000000;
   backdrop-filter: none;
 }
@@ -154,7 +166,7 @@ h4 {
 }
 
 .about-blueprint-img {
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
 }
 
 /* Build Process */
