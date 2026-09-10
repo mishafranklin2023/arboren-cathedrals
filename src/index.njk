@@ -1,0 +1,48 @@
+---
+activePage: home
+permalink: index.html
+---
+{% extends "layouts/base.njk" %}
+
+{% block title %}Arboren CAThedrals | Custom Catio Bridges &amp; Builds, Portland OR{% endblock %}
+{% block description %}Custom catio design and build services in Portland, Oregon. Bespoke catios, skybridges, and enclosed outdoor spaces for your cats.{% endblock %}
+
+{% block main %}
+<main>
+
+  <!-- FEATURED PHOTO -->
+  <section id="featured-photo" class="featured-photo">
+    <img class="featured-photo-img" src="Dave_Thom-optimized.avif"
+      alt="Thom Arboren and David Dicks with the Portland-bridge-themed catio skybridges" width="1280" height="591"
+      fetchpriority="high" decoding="async">
+  </section>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-text">
+      <h1>Welcome to Arboren CAThedrals</h1>
+      <h2>Makers of bespoke catios and skybridges</h2>
+      <p class="lede">Whether it's an elevated walkway, a climbable tower, or
+        your idea sketched on a napkin, we build intentionally and artistically for cats.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#gallery">View Gallery</a>
+        <a class="btn btn-secondary" href="contact.html">Contact Thom</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img class="hero-blueprint-img" src="images/taillikum-bridge.svg"
+        alt="Blueprint diagram of the Taillikum Bridge">
+    </div>
+  </section>
+
+  {% include "components/parts-of-catio.njk" %}
+
+  {% include "components/gallery.njk" %}
+
+  {% include "components/press.njk" %}
+
+  {% include "components/contact-cta.njk" %}
+
+</main>
+{% endblock %}

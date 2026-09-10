@@ -1,0 +1,101 @@
+---
+activePage: about
+permalink: about.html
+---
+{% extends "layouts/base.njk" %}
+
+{% block title %}About | Arboren CAThedrals{% endblock %}
+{% block description %}Meet the builder and the quality-control crew behind Arboren CAThedrals custom catios and skybridges in Portland, Oregon.{% endblock %}
+
+{% block main %}
+<main>
+
+  <!-- MEET THE BUILDER -->
+  <section id="about" class="about surface-photo">
+    <h2 class="photo-background-heading">Meet the builder (and his quality-control crew)</h2>
+    <div class="about-content photo-background-text">
+      <div class="about-art">
+        <img class="about-blueprint-img" src="images/pawthorne-bridge.svg"
+          alt="Blueprint diagram of the Pawthorne Bridge">
+      </div>
+      <p>Thom and Meara Arboren live in Portland, Oregon with their 6 cats and their custom 100 sq ft Catio. They
+        built their first catio in 2020, when they blended their cat families. Donnie and Artie, Meara&rsquo;s cats,
+        fell in love with Nell&rsquo;s simple catio. Then, what started as a simple 2x4x6ft catio grew into a 20 ft,
+        3-part catio, which gave each cat space to roam safely in the sun!</p>
+      <p>Thom&rsquo;s construction experience began as early as he can remember, always willing to help his large family
+        with home renovations from painting to drywall to plumbing. As a young adult he became an apprentice in
+        drafting and CNC woodworking, then earned his Associates Degree and Certificate in Computer Aided Drafting
+        from Portland Community College. Since then he continues to learn and grow his design skills utilizing a
+        range of softwares and machine manufacturing techniques. Always looking to create and to innovate, he
+        joined the Ministry of Stupid Ideas and spent the last decade bringing projects of high complexity but
+        questionable value, to life. Thom designed and led the build of the Ill-considered Strength-O-Meter, an
+        interactive 37-foot Fire-spouting High Striker at the 2024 Portland Winter Lights Festival. Other
+        contributions include the Eternal Flame of Stupid Ideas (PWLF 2025).</p>
+      <p>In 2021, Meara&rsquo;s parents moved to Portland, fell in love with the catio the couple had constructed for
+        their own cats, and decided they wanted a catio of their own. They decided on an enclosed back porch and
+        separate tower for their side yard. As the build progressed, they began to spitball the idea of someday
+        building a 30 foot bridge to span the separate catios. Those evening and weekend brainstorming and dream
+        sessions blossomed into a plan for 3 scale models of real Portland bridges.
+      </p>
+    </div>
+  </section>
+
+  <!-- CREW -->
+  <section id="crew" class="crew surface-light">
+    <h2>The crew</h2>
+    <div class="crew-grid">
+      <article class="crew-card">
+        <p><strong>Nell</strong></p>
+        <div class="crew-img-wrap">
+          <img src="images/CrewPicsOpt/Nell.png" alt="Nell, a domestic long hair cat and the senior crew member"
+            loading="lazy" decoding="async">
+        </div>
+        <p>Domestic Long Hair 17 years old</p>
+      </article>
+      <article class="crew-card">
+        <p><strong>Donnie</strong></p>
+        <div class="crew-img-wrap">
+          <img src="images/CrewPicsOpt/Donnie.png" alt="Donnie, a domestic short hair cat" loading="lazy"
+            decoding="async">
+        </div>
+        <p>Domestic short Hair 15 years old</p>
+      </article>
+      <article class="crew-card">
+        <p><strong>Artemis</strong></p>
+        <div class="crew-img-wrap">
+          <img src="images/CrewPicsOpt/Artemis.png" alt="Artemis, a short-haired mackerel tabby cat" loading="lazy"
+            decoding="async">
+        </div>
+        <p>SH Mackerel Tabby 14 years old</p>
+      </article>
+      <article class="crew-card">
+        <p><strong>Bob</strong></p>
+        <div class="crew-img-wrap">
+          <img src="images/CrewPicsOpt/Bob.png" alt="Bob, a short-haired classic tabby cat" loading="lazy"
+            decoding="async">
+        </div>
+        <p>SH Classic Tabby 5 years old</p>
+      </article>
+      <article class="crew-card">
+        <p><strong>Chani</strong></p>
+        <div class="crew-img-wrap">
+          <img src="images/CrewPicsOpt/Chani.png" alt="Chani, a short-haired tortoiseshell cat" loading="lazy"
+            decoding="async">
+        </div>
+        <p>SH Tortioseshell 5 years old</p>
+      </article>
+      <article class="crew-card">
+        <p><strong>Marceline</strong></p>
+        <div class="crew-img-wrap">
+          <img src="images/CrewPicsOpt/Marceline.png" alt="Marceline, a medium-hair torbie kitten" loading="lazy"
+            decoding="async">
+        </div>
+        <p>Medium Hair Torbie 5 months old</p>
+      </article>
+    </div>
+  </section>
+
+  {% include "components/process.njk" %}
+
+</main>
+{% endblock %}

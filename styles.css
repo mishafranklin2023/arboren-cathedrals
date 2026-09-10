@@ -32,7 +32,7 @@
   --h4-size: 1.5rem;
   --body-weight: 300;
   --h1-weight: 700;
-  --h2-weight: 500;
+  --h2-weight: 600;
   --heading-weight: 600;
   --accent: var(--palm-leaf);
   --accent-2: var(--red-ochre);
@@ -54,24 +54,17 @@
   --header-text: var(--text);
 }
 
-/* Grid-paper / blueprint background texture — off-white lines on the
-   olive-wood sections, sage green lines on the dark-spruce sections.
-   Gridlines are 0.5px (50% thinner than a standard 1px line) for the
-   Hero, Gallery ("The Bridges & Builds"), and Contact ("Let's Build
-   Something...") sections, which all show this shared body background
-   through. */
-body {
+/* Reusable surface classes carry the correct 24px grid texture everywhere. */
+.surface-light {
   background-color: var(--bg);
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px);
   background-size: 24px 24px;
+  color: var(--text);
 }
 
-.about,
-.build-process,
-.services,
-.site-footer {
+.surface-dark {
   background-color: var(--bg-alt);
   background-image:
     linear-gradient(rgba(114, 138, 80, 0.09) 1px, transparent 1px),
@@ -80,7 +73,29 @@ body {
   color: var(--text-on-dark);
 }
 
-.crew {
+.surface-photo {
+  position: relative;
+  background-image: url('Dave_Thom-optimized.avif');
+  background-size: cover;
+  background-position: center;
+  color: var(--text-on-photo);
+}
+
+.surface-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--press-overlay, rgba(21, 21, 0, 0.78));
+  z-index: 0;
+}
+
+.surface-photo > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Default page surface matches .surface-light. */
+body {
   background-color: var(--bg);
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px),
@@ -124,11 +139,16 @@ h3 {
 }
 
 /* Cards and controls on dark surfaces use the alternate foreground color. */
-.press-card,
-.service-card,
-.contact-form,
-.carousel-slide,
-.carousel-btn {
+.surface-dark .service-card,
+.surface-dark .press-card,
+.surface-dark .contact-form,
+.surface-dark .carousel-slide,
+.surface-dark .carousel-btn,
+.surface-photo .press-card,
+.surface-photo .service-card,
+.surface-photo .contact-form,
+.surface-photo .carousel-slide,
+.surface-photo .carousel-btn {
   color: var(--text-on-dark);
 }
 
@@ -143,30 +163,34 @@ h3 {
   z-index: 1;
 }
 
-/* About section: full-bleed background photo with dark overlay for readability */
-.about {
-  position: relative;
-  background-image: url('Dave_Thom-optimized.avif');
-  background-size: cover;
-  background-position: center;
-}
-
-.about::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(21, 21, 0, 0.78);
-  z-index: 0;
-}
-
-.about h2,
-.about .about-content {
-  position: relative;
-  z-index: 1;
-}
-
 .about-blueprint-img {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+/* Placeholder sections for future content. */
+.placeholder-section .content-wrap,
+.contact-cta .content-wrap,
+.parts-of-catio .content-wrap {
+  width: var(--content-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.placeholder-box {
+  max-width: 800px;
+  margin: 2rem auto 0;
+  padding: 2rem;
+  border: 2px dashed var(--card-border);
+  border-radius: var(--radius);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.surface-light .placeholder-box {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.placeholder-box p {
+  margin-bottom: 0;
 }
 
 /* Build Process */
@@ -175,7 +199,7 @@ h3 {
   padding-left: 1.5em;
 }
 
-.build-process-copy li + li {
+.build-process-copy li+li {
   margin-top: 0.75rem;
 }
 

@@ -1,0 +1,28 @@
+---
+activePage: services
+permalink: services.html
+---
+{% extends "layouts/base.njk" %}
+
+{% block title %}Services | Arboren CAThedrals{% endblock %}
+{% block description %}Catio project tiers and the Arboren process for custom catios, skybridges, and enclosed outdoor cat spaces in Portland, Oregon.{% endblock %}
+
+{% block main %}
+<main>
+
+  <section id="what-we-build" class="placeholder-section surface-light">
+    <div class="content-wrap">
+      <h2>What We Build</h2>
+      <p class="section-sub">An overview of Arboren CAThedrals services and project types.</p>
+      <div class="placeholder-box" aria-label="Future content: what we build">
+        <p><em>[Future content: detailed service descriptions coming soon.]</em></p>
+      </div>
+    </div>
+  </section>
+
+  {% include "components/tiers.njk" %}
+
+  {% include "components/process.njk" %}
+
+</main>
+{% endblock %}

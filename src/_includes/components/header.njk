@@ -1,0 +1,19 @@
+<header class="site-header">
+  <div class="nav-wrap">
+    <a class="logo" href="index.html">
+      <img class="mascot" src="images/ArbCatioLogo.png"
+        alt="Tan silhouette of a cat's face surrounded by Arboren CAThedrals Portland, OR">
+      <span>Arboren CAThedrals</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html" {% if activePage == 'home' %}aria-current="page"{% endif %}>Home</a>
+      <a href="about.html" {% if activePage == 'about' %}aria-current="page"{% endif %}>About</a>
+      <a href="services.html" {% if activePage == 'services' %}aria-current="page"{% endif %}>Services</a>
+      <a href="catios.html" {% if activePage == 'catios' %}aria-current="page"{% endif %}>Catios</a>
+      <a href="contact.html" {% if activePage == 'contact' %}aria-current="page"{% endif %}>Contact Us</a>
+    </nav>
+  </div>
+</header>
