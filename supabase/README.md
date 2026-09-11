@@ -69,7 +69,10 @@ stored in a Supabase Storage bucket named `contact-uploads`.
 
 1. In the dashboard, go to **Storage -> New bucket**.
 2. Name it exactly `contact-uploads`.
-3. In the bucket's **Policies** tab, add the following policies for the `anon`
+3. Turn the **Public bucket** toggle **ON**. Without this, files cannot be
+   viewed via a public URL and will return a 404 `Bucket not found` error
+   even though the upload succeeds.
+4. In the bucket's **Policies** tab, add the following policies for the `anon`
    role so the public website can upload and read back file URLs:
    - **INSERT** policy: `bucket_id = 'contact-uploads'` (or `(auth.role() = 'anon')`).
    - **SELECT** policy: `bucket_id = 'contact-uploads'`.
