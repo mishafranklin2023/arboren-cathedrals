@@ -10,6 +10,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("images/pawthorne-bridge.svg");
   eleventyConfig.addPassthroughCopy("images/taillikum-bridge.svg");
   eleventyConfig.addPassthroughCopy("Dave_Thom-optimized.avif");
+  eleventyConfig.addPassthroughCopy("images/catstruction-color-opt.png");
 
   eleventyConfig.addWatchTarget("base.css");
   eleventyConfig.addWatchTarget("styles.css");

@@ -5,16 +5,18 @@
 
 :root {
   /* Fallback values (Craftsman theme) in case a theme file isn't loaded */
-  --bg: #faf3e8;
-  --bg-alt: #f0e4d0;
-  --text: #3a2c22;
-  --text-on-dark: #3a2c22;
-  --text-on-photo: #ffffff;
-  --photo-text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
-  --photo-heading-shadow: 0 3px 8px rgba(0, 0, 0, 0.85);
+  --bg: #DFC596;
+  --bg-alt: #1A4F1A;
+  --text: #0F2F0F;
+  --text-on-dark: #F0E4D0;
+  --text-on-light: #0F2F0F;
+  --text-on-photo: #F0E4D0;
+  --photo-text-shadow: 0 2px 6px rgba(15, 47, 15, 0.75);
+  --photo-heading-shadow: 0 3px 8px rgba(15, 47, 15, 0.85);
   --cta: #9F0643;
   --heading-font: 'Poppins', sans-serif;
   --body-font: 'Poppins', sans-serif;
+  --blockquote-font: 'Poppins', sans-serif;
   --body-size: 1.5rem;
   --h1-size: 3.25rem;
   --h2-size: 2.5rem;
@@ -33,12 +35,14 @@
   --radius: 10px;
   --shadow: 0 6px 18px rgba(58, 44, 34, 0.12);
   --btn-primary-bg: var(--accent-2);
-  --btn-primary-text: var(--olive-wood);
+  --btn-primary-text: var(--champagne-mist);
+  --btn-primary-border: var(--text);
   --btn-secondary-bg: transparent;
-  --btn-secondary-text: var(--olive-wood);
-  --btn-secondary-border: var(--accent);
-  --btn-tertiary-bg: #CFCFCF;
-  --btn-tertiary-text: #000000;
+  --btn-secondary-text: var(--champagne-mist);
+  --btn-secondary-border: var(--text);
+  --btn-tertiary-bg: #808080;
+  --btn-tertiary-text: #F0E4D0;
+  --btn-tertiary-border: #9F0643;
 
   --header-bg: var(--bg);
   --header-text: var(--text);
@@ -182,12 +186,15 @@ section {
 }
 
 .site-nav a:hover,
-.site-nav a:focus-visible,
+.site-nav a:focus-visible {
+  color: var(--accent-2);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .site-nav a[aria-current="page"],
 .site-nav a.active {
   color: var(--accent-2);
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
 }
 
 .nav-toggle {
@@ -230,7 +237,7 @@ section {
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   font-family: var(--heading-font);
   font-size: 1rem;
 }
@@ -238,6 +245,7 @@ section {
 .btn-primary {
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
+  border-color: var(--btn-primary-border);
 }
 
 .btn-primary:hover {
@@ -407,7 +415,7 @@ section {
 
 /* ---------- Real Build Photos Carousel ---------- */
 .photo-carousel-wrap {
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .carousel-heading {
@@ -580,6 +588,16 @@ section {
   height: clamp(280px, 40vw, 520px);
   object-fit: cover;
   object-position: center top;
+}
+
+/* ---------- Catstruction Photo ---------- */
+.small-catstruction {
+  display: block;
+  width: 250px;
+  height: 250px;
+  margin: 0.5rem auto;
+  object-fit: contain;
+  object-position: center;
 }
 
 /* ---------- Press ---------- */

@@ -1,31 +1,33 @@
 /* ===== Theme B: Blueprint (Logo Palette) — drafting table / engineering diagram feel =====
    Palette sourced directly from the ArbCatioLogo.png artwork:
-     pitch-black      #151500  (near-black, olive-tinted) --changed to Deep Forest Green: #0F2F0F
+     pitch-black      #151500  (near-black, olive-tinted) --changed to Deep Forest Green: #0F2F0F - body text, text-on-light (background)
      palm-leaf        #728A50  (muted sage green)
-     red-ochre        #C93E0C  (burnt orange-red) - changed to #9F0643 for ada contrast
-     dark-spruce      #1A4F1A  (deep forest green)
-     olive-wood       #8B774F  (warm tan/khaki) - changed to #DFC596 for ada contrast
+     red-ochre        #C93E0C  (burnt orange-red) - changed to --cherry-rose #9F0643 for ada contrast
+     dark-spruce      #1A4F1A  (deep forest green) --alt background
+     olive-wood       #8B774F  (warm tan/khaki) - changed to --tan  #DFC596 for ada contrast --light background
      bitter-chocolate #6D4040  (muted brown-red)
    The palette colors define structural surfaces and accents. Olive-wood text
    is used on alternate surfaces; photo backgrounds use white text and black shadows. */
 :root {
   --deep-forest-green: #0F2F0F;
   --palm-leaf: #728A50;
-  --red-ochre: #9F0643;
+  --cherry-rose: #9F0643;
   --dark-spruce: #1A4F1A;
-  --olive-wood: #DFC596;
+  --tan: #DFC596;
+  --champagne-mist: #F0E4D0;
   --bitter-chocolate: #6D4040;
 
-  --bg: var(--olive-wood);
+  --bg: var(--tan);
   --bg-alt: var(--dark-spruce);
   --text: var(--deep-forest-green);
-  --text-on-dark: #D5CAB4;
-  --text-on-light: #000000;
-  --text-on-photo: #ffffff;
-  --photo-text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
-  --photo-heading-shadow: 0 3px 8px rgba(0, 0, 0, 0.85);
-  --heading-font: 'Lucida Console', sans-serif;
-  --body-font: 'Poppins', sans-serif;
+  --text-on-dark: #F0E4D0;
+  --text-on-light: #0F2F0F;
+  --text-on-photo: #F0E4D0;
+  --photo-text-shadow: 0 2px 6px rgba(15, 47, 15, 0.75);
+  --photo-heading-shadow: 0 3px 8px rgba(15, 47, 15, 0.85);
+  --heading-font: "Lucida Console", monospace;
+  --blockquote-font: "Courier New", monospace, "Poppins", sans-serif;
+  --body-font: "Poppins", sans-serif;
   --body-size: 1.5rem;
   --h1-size: 3.25rem;
   --h2-size: 2.5rem;
@@ -36,24 +38,26 @@
   --h2-weight: 600;
   --heading-weight: 600;
   --accent: var(--palm-leaf);
-  --accent-2: var(--red-ochre);
-  --cta: var(--bitter-chocolate);
+  --accent-2: var(--cherry-rose);
+  --cta: var(--cherry-rose);
   --card-bg: var(--dark-spruce);
-  --card-border: var(--olive-wood);
+  --card-border: var(--tan);
   --radius: 4px;
-  --shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  --shadow: 0 6px 18px rgba(15, 47, 15, 0.35);
 
   --btn-primary-bg: var(--bitter-chocolate);
-  --btn-primary-text: #D5CAB4;
+  --btn-primary-text: #F0E4D0;
+  --btn-primary-border: var(--champagne-mist);
   --btn-secondary-bg: var(--dark-spruce);
-  --btn-secondary-text: #D5CAB4;
-  --btn-secondary-border: var(--dark-spruce);
-  --btn-tertiary-bg: #CFCFCF;
-  --btn-tertiary-text: var(--text-on-light);
+  --btn-secondary-text: #F0E4D0;
+  --btn-secondary-border: var(--champagne-mist);
+  --btn-tertiary-bg: #808080;
+  --btn-tertiary-text: var(--text-on-dark);
+  --btn-tertiary-border: var(--deep-forest-green);
 
   --press-overlay: rgba(21, 21, 0, 0.39);
 
-  --header-bg: var(--olive-wood);
+  --header-bg: var(--tan);
   --header-text: var(--text);
 }
 
@@ -157,8 +161,9 @@ h3 {
 
 .surface-dark .btn-tertiary,
 .surface-photo .btn-tertiary {
-  --btn-tertiary-bg: #CFCFCF;
-  --btn-tertiary-text: var(--text-on-light);
+  --btn-tertiary-bg: #808080;
+  --btn-tertiary-text: var(--text-on-dark);
+  --btn-tertiary-border: var(--deep-forest-green);
 }
 
 .hero {
@@ -183,6 +188,58 @@ h3 {
   width: var(--content-width);
   margin: 0 auto;
   text-align: center;
+}
+
+.catio-quote {
+  margin: 1rem 2rem;
+}
+
+.catio-quote blockquote {
+  margin: 0;
+  padding: 1rem;
+  background: #277727;
+  filter: brightness(1.3);
+  border-left: 10px solid #0F2F0F;
+  border-radius: var(--radius);
+}
+
+.catio-quote blockquote::before,
+.catio-quote blockquote::after {
+  color: #9F0643;
+  font-family: var(--heading-font);
+  font-size: 6rem;
+  font-weight: 700;
+  line-height: 0;
+  vertical-align: -0.4em;
+}
+
+.catio-quote blockquote::before {
+  content: "\201C";
+}
+
+.catio-quote blockquote::after {
+  content: "\201D";
+}
+
+.catio-quote blockquote p {
+  display: inline;
+  margin: 0;
+  font-family: var(--blockquote-font);
+  font-size: 2rem;
+  font-weight: 100;
+  line-height: 1.5;
+}
+
+.catio-quote figcaption {
+  margin-top: 0.5rem;
+  font-family: var(--blockquote-font);
+  font-size: 1.1rem;
+  font-weight: var(--body-weight);
+  line-height: 2;
+}
+
+.catio-quote figcaption cite {
+  font-style: normal;
 }
 
 .placeholder-box {
@@ -298,7 +355,7 @@ h3 {
 .contact-form input[type="file"]::file-selector-button {
   background: var(--btn-tertiary-bg);
   color: var(--btn-tertiary-text);
-  border: 2px solid transparent;
+  border: 1px solid var(--deep-forest-green);
   border-radius: var(--radius);
   padding: 0.5rem 1rem;
   font-family: var(--heading-font);
