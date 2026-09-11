@@ -29,6 +29,22 @@ dashboards — no CLI or local Node.js install required.
    > policy looks correct. If you ever see that error, re-run just that one
    > `grant` statement in the SQL Editor.
 
+## 2b. Upgrading an existing table (v2 form fields)
+
+If the table already exists from an earlier version of the site, the expanded
+contact form needs extra columns. Without them, submissions fail with:
+
+```
+PGRST204: Could not find the 'best_time' column of 'contact_submissions' in the schema cache
+```
+
+1. In the project dashboard, open **SQL Editor** -> **New query**.
+2. Paste in the contents of `supabase/migration_v2_contact_form.sql` and run it.
+   This adds `phone`, `contact_method`, `best_time`, `zipcode`, `services`,
+   `planning_process`, and `files`.
+3. If you see an error about `contact_method` already being `text`, run the
+   commented repair statement in that file first to convert it to `text[]`.
+
 ## 3. Connect the site to Supabase
 
 1. In the dashboard, go to **Project Settings -> Data API**.
@@ -44,9 +60,25 @@ dashboards — no CLI or local Node.js install required.
    under **Table Editor -> contact_submissions** in the dashboard.
 
 At this point the form works end-to-end and stores submissions in Supabase.
-Steps 4-6 below add the *email notification* on top of that.
+Steps 5-7 below add the *email notification* on top of that.
 
-## 4. Create a Resend account
+## 4. Create the Storage bucket for file uploads (optional)
+
+The contact form lets visitors attach sketches, photos, or plans. These are
+stored in a Supabase Storage bucket named `contact-uploads`.
+
+1. In the dashboard, go to **Storage -> New bucket**.
+2. Name it exactly `contact-uploads`.
+3. In the bucket's **Policies** tab, add the following policies for the `anon`
+   role so the public website can upload and read back file URLs:
+   - **INSERT** policy: `bucket_id = 'contact-uploads'` (or `(auth.role() = 'anon')`).
+   - **SELECT** policy: `bucket_id = 'contact-uploads'`.
+
+Without this bucket, file uploads fail after the form's table insert succeeds.
+Submissions without files work fine with just step 2.
+
+## 5. Create a Resend account
+
 
 1. Go to https://resend.com and sign up (free tier: 3,000 emails/month, 100/day).
 2. Under **API Keys**, create a new key and copy it (you'll only see it once).
@@ -59,11 +91,11 @@ Steps 4-6 below add the *email notification* on top of that.
    later by just updating the `NOTIFY_FROM_EMAIL` secret (no redeploy of code
    needed).
 
-## 5. Deploy the notify-contact Edge Function (via the Supabase Dashboard)
+## 6. Deploy the notify-contact Edge Function (via the Supabase Dashboard)
 
 1. In your Supabase project, go to **Edge Functions** in the sidebar.
 2. Click **Deploy a new function** -> **Via Editor**.
-3. Name it exactly `notify-contact` (the webhook in step 6 calls it by name).
+3. Name it exactly `notify-contact` (the webhook in step 7 calls it by name).
 4. Replace the template code with the contents of
    `supabase/functions/notify-contact/index.ts` from this repo.
 5. Click **Deploy function**.
@@ -73,7 +105,7 @@ Then set the secrets it needs — still under **Edge Functions**, open
 
 | Secret | Value |
 |---|---|
-| `RESEND_API_KEY` | the key from step 4 |
+| `RESEND_API_KEY` | the key from step 5 |
 | `NOTIFY_TO_EMAIL` | Thom's real inbox, e.g. `thom@arborencathedrals.com` |
 | `NOTIFY_FROM_EMAIL` | `Arboren CAThedrals <onboarding@resend.dev>` for now, or your verified domain sender once set up (optional — defaults to Resend's shared test address if omitted) |
 
@@ -85,7 +117,7 @@ Secrets are shared across all Edge Functions in the project.
 > Node.js installed locally — the Dashboard editor above is just the
 > no-install alternative used for this project.
 
-## 6. Wire up the trigger
+## 7. Wire up the trigger
 
 1. In the Supabase dashboard, go to **Database -> Webhooks -> Create a new hook**.
 2. Table: `contact_submissions`. Event: `Insert`.
