@@ -227,6 +227,7 @@ if (contactForm) {
     }
 
     const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn ? submitBtn.textContent : '';
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
@@ -264,7 +265,10 @@ if (contactForm) {
     }
 
     contactForm.setAttribute('aria-busy', 'true');
-    submitBtn.disabled = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+    }
 
     try {
       const uploadedFiles = await uploadFiles(files);
@@ -299,7 +303,10 @@ if (contactForm) {
       showStatus('A network error prevented your message from sending. Please check your connection or email Thom directly.', true);
     } finally {
       contactForm.setAttribute('aria-busy', 'false');
-      submitBtn.disabled = false;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      }
     }
   });
 }
