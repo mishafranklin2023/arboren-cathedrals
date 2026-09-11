@@ -13,7 +13,7 @@
 //   supabase secrets set NOTIFY_FROM_EMAIL="Arboren CAThedrals <onboarding@resend.dev>"
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
-const NOTIFY_TO_EMAIL = Deno.env.get('NOTIFY_TO_EMAIL');
+const NOTIFY_TO_EMAIL = Deno.env.get('NOTIFY_TO_EMAIL')?.split(',').map((s) => s.trim()).filter(Boolean) ?? [];
 const NOTIFY_FROM_EMAIL = Deno.env.get('NOTIFY_FROM_EMAIL') ?? 'onboarding@resend.dev';
 
 Deno.serve(async (req) => {
@@ -33,7 +33,7 @@ Deno.serve(async (req) => {
       files,
     } = record;
 
-    if (!RESEND_API_KEY || !NOTIFY_TO_EMAIL) {
+    if (!RESEND_API_KEY || NOTIFY_TO_EMAIL.length === 0) {
       console.error('Missing RESEND_API_KEY or NOTIFY_TO_EMAIL secret');
       return new Response('Server not configured', { status: 500 });
     }
