@@ -14,6 +14,7 @@
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 const NOTIFY_TO_EMAIL = Deno.env.get('NOTIFY_TO_EMAIL')?.split(',').map((s) => s.trim()).filter(Boolean) ?? [];
+const NOTIFY_BCC_EMAIL = Deno.env.get('NOTIFY_BCC_EMAIL')?.split(',').map((s) => s.trim()).filter(Boolean) ?? [];
 const NOTIFY_FROM_EMAIL = Deno.env.get('NOTIFY_FROM_EMAIL') ?? 'onboarding@resend.dev';
 
 Deno.serve(async (req) => {
@@ -99,6 +100,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         from: NOTIFY_FROM_EMAIL,
         to: NOTIFY_TO_EMAIL,
+        ...(NOTIFY_BCC_EMAIL.length > 0 && { bcc: NOTIFY_BCC_EMAIL }),
         reply_to: email,
         subject: `New catio inquiry from ${name}`,
         text: sections.join('\n\n'),

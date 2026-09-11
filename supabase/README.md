@@ -107,6 +107,7 @@ Then set the secrets it needs — still under **Edge Functions**, open
 |---|---|
 | `RESEND_API_KEY` | the key from step 5 |
 | `NOTIFY_TO_EMAIL` | Thom's real inbox. Supports one address or multiple comma-separated addresses, e.g. `thom@arborencathedrals.com, partner@arborencathedrals.com` |
+| `NOTIFY_BCC_EMAIL` | Optional BCC address(es) for IT support, e.g. `it-support@example.com`. Supports one address or multiple comma-separated addresses. Omit if not needed. |
 | `NOTIFY_FROM_EMAIL` | `Arboren CAThedrals <onboarding@resend.dev>` for now, or your verified domain sender once set up (optional — defaults to Resend's shared test address if omitted) |
 
 Secrets are shared across all Edge Functions in the project.
