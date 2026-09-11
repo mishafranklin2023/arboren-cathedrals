@@ -38,25 +38,56 @@ Deno.serve(async (req) => {
       return new Response('Server not configured', { status: 500 });
     }
 
-    const lines = [];
-    lines.push(`Name: ${name ?? ''}`);
-    lines.push(`Email: ${email ?? ''}`);
-    if (phone) lines.push(`Phone: ${phone}`);
-    if (contact_method?.length) lines.push(`Best way to contact: ${Array.isArray(contact_method) ? contact_method.join(', ') : contact_method}`);
-    if (best_time?.length) lines.push(`Best time: ${best_time.join(', ')}`);
-    if (zipcode) lines.push(`Zipcode: ${zipcode}`);
-    if (services?.length) lines.push(`Services: ${services.join(', ')}`);
-    if (planning_process) lines.push(`Planning stage: ${planning_process}`);
-    lines.push('');
-    lines.push('Message:');
-    lines.push(message ?? '');
+    const displayLabels: Record<string, string> = {
+      text: 'Text',
+      phone: 'Phone',
+      email: 'Email',
+      mornings: 'Mornings',
+      afternoons: 'Afternoons',
+      evenings: 'Evenings',
+      arboren_cathedrals_catios: 'Arboren Cathedrals Catios!',
+      diy_catio_plans: 'Purchasing plans for a DIY Catio',
+      other_services: 'Other Services',
+      laser_cutting: 'Laser cutting',
+      engraving: 'Engraving',
+      '3d_design_printing': '3D design / printing',
+      just_talk: "I'm not planning a project, but I'd like to talk to you.",
+      inspired_curious: "I'm inspired and curious, let's discuss options.",
+      turn_ideas: 'Help turn my ideas into a project.',
+      finalizing_plan: "I'm finalizing my plan and prepping the catio location.",
+      ready_to_go: "I'm ready to go with plans and a prepped site.",
+    };
+
+    function display(value: unknown) {
+      return displayLabels[String(value)] ?? String(value ?? '');
+    }
+
+    function formatList(values: unknown[]) {
+      return values.map((v) => `- ${display(v)}`).join('\n');
+    }
+
+    const sections = [];
+    sections.push(`**Name:**\n${display(name)}`);
+    sections.push(`**Email:**\n${display(email)}`);
+    if (phone) sections.push(`**Phone:**\n${display(phone)}`);
+    if (contact_method?.length) {
+      sections.push(`**Best way to contact you:**\n${formatList(Array.isArray(contact_method) ? contact_method : [contact_method])}`);
+    }
+    if (best_time?.length) {
+      sections.push(`**Best time to contact you:**\n${formatList(best_time)}`);
+    }
+    if (zipcode) sections.push(`**Zipcode:**\n${display(zipcode)}`);
+    if (services?.length) {
+      sections.push(`**What services are you interested in?**\n${formatList(services)}`);
+    }
+    if (planning_process) {
+      sections.push(`**Where are you in the planning process?**\n${display(planning_process)}`);
+    }
+    sections.push(`**Add your comments, questions, or describe your project:**\n${display(message)}`);
 
     if (files?.length) {
-      lines.push('');
-      lines.push('Attachments:');
-      for (const file of files) {
-        lines.push(file.url ? `${file.name}: ${file.url}` : file.name);
-      }
+      const fileLines = files.map((file: any) => `- ${file.name}${file.url ? `: ${file.url}` : ''}`);
+      sections.push(`**Attachments:**\n${fileLines.join('\n')}`);
     }
 
     const res = await fetch('https://api.resend.com/emails', {
@@ -70,7 +101,7 @@ Deno.serve(async (req) => {
         to: NOTIFY_TO_EMAIL,
         reply_to: email,
         subject: `New catio inquiry from ${name}`,
-        text: lines.join('\n'),
+        text: sections.join('\n\n'),
       }),
     });
 
