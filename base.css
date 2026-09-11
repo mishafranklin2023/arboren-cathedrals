@@ -12,7 +12,7 @@
   --text-on-photo: #ffffff;
   --photo-text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
   --photo-heading-shadow: 0 3px 8px rgba(0, 0, 0, 0.85);
-  --cta: #d97b3f;
+  --cta: #9F0643;
   --heading-font: 'Poppins', sans-serif;
   --body-font: 'Poppins', sans-serif;
   --body-size: 1.5rem;
@@ -33,10 +33,12 @@
   --radius: 10px;
   --shadow: 0 6px 18px rgba(58, 44, 34, 0.12);
   --btn-primary-bg: var(--accent-2);
-  --btn-primary-text: #000000;
+  --btn-primary-text: var(--olive-wood);
   --btn-secondary-bg: transparent;
-  --btn-secondary-text: #000000;
+  --btn-secondary-text: var(--olive-wood);
   --btn-secondary-border: var(--accent);
+  --btn-tertiary-bg: #CFCFCF;
+  --btn-tertiary-text: #000000;
 
   --header-bg: var(--bg);
   --header-text: var(--text);
@@ -249,6 +251,15 @@ section {
 }
 
 .btn-secondary:hover {
+  filter: brightness(1.08);
+}
+
+.btn-tertiary {
+  background: var(--btn-tertiary-bg);
+  color: var(--btn-tertiary-text);
+}
+
+.btn-tertiary:hover {
   filter: brightness(1.08);
 }
 
@@ -664,11 +675,13 @@ section {
 }
 
 .contact-form {
+  --form-gap: 4rem;
+
   max-width: 960px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--form-gap);
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
@@ -676,9 +689,24 @@ section {
   box-shadow: var(--shadow);
 }
 
-.contact-form label {
-  font-weight: 700;
-  margin-top: 0.5rem;
+.contact-content h2 {
+  margin-bottom: 0.5rem;
+}
+
+.contact-content .section-sub {
+  margin-bottom: 2rem;
+}
+
+.contact-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-form label,
+.contact-form legend {
+  font-weight: 400;
+  margin-top: 0;
 }
 
 .contact-form input,
@@ -687,9 +715,16 @@ section {
   border-radius: 8px;
   border: 1px solid var(--card-border);
   font-family: var(--body-font);
-  font-size: 1rem;
-  background: var(--bg);
-  color: var(--text);
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  background: #ffffff;
+  color: var(--text-on-light);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #6b6b6b;
+  opacity: 1;
 }
 
 .contact-form button {
@@ -720,6 +755,7 @@ section {
   text-align: center;
   padding: 2.5rem 1.5rem;
   background: var(--bg-alt);
+  border-top: 1px solid #000000;
 }
 
 .site-footer .mascot {

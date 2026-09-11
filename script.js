@@ -125,6 +125,30 @@ initGalleries();
 // Contact form submit -> Supabase
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
+const servicesOther = document.getElementById('servicesOther');
+const otherServicesOptions = document.getElementById('otherServicesOptions');
+
+if (servicesOther && otherServicesOptions) {
+  servicesOther.addEventListener('change', () => {
+    otherServicesOptions.classList.toggle('visible', servicesOther.checked);
+  });
+}
+
+function formatPhone(input) {
+  const digits = input.value.replace(/\D/g, '').slice(0, 10);
+  if (digits.length > 6) {
+    input.value = `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+  } else if (digits.length > 3) {
+    input.value = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  } else {
+    input.value = digits;
+  }
+}
+
+const phoneInput = document.getElementById('phone');
+if (phoneInput) {
+  phoneInput.addEventListener('input', () => formatPhone(phoneInput));
+}
 
 if (contactForm) {
   const supabaseClient = (typeof supabase !== 'undefined' && typeof SUPABASE_URL !== 'undefined')
@@ -148,14 +172,91 @@ if (contactForm) {
     formStatus.hidden = true;
   }
 
+  function getCheckedValues(name) {
+    return Array.from(contactForm.querySelectorAll(`input[name="${name}"]:checked`)).map((cb) => cb.value);
+  }
+
+  function validateFiles(files) {
+    const maxSize = 10 * 1024 * 1024;
+    for (const file of files) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      const allowedExt = ['pdf', 'txt', 'docx', 'png', 'webp', 'avif', 'jpg', 'jpeg', 'tiff'].includes(ext);
+      const allowedType = file.type.startsWith('image/') ||
+        file.type === 'text/plain' ||
+        file.type === 'application/pdf' ||
+        file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      if (!allowedExt && !allowedType) {
+        return `File type not allowed: ${file.name}`;
+      }
+      if (file.size > maxSize) {
+        return `File too large (max 10 MB): ${file.name}`;
+      }
+    }
+    return null;
+  }
+
+  async function uploadFiles(files) {
+    if (!files.length) return [];
+    const uploaded = [];
+    for (const file of files) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      const path = `contact/${crypto.randomUUID()}.${ext}`;
+      const { data, error } = await supabaseClient.storage
+        .from('contact-uploads')
+        .upload(path, file, {
+          cacheControl: '3600',
+          upsert: false,
+          ...(file.type ? { contentType: file.type } : {}),
+        });
+      if (error) {
+        throw new Error(`Upload failed for ${file.name}: ${error.message}`);
+      }
+      const { data: publicUrlData } = supabaseClient.storage.from('contact-uploads').getPublicUrl(data.path);
+      uploaded.push({ name: file.name, path: data.path, url: publicUrlData.publicUrl });
+    }
+    return uploaded;
+  }
+
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearStatus();
 
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const contactMethod = getCheckedValues('contact_method[]');
+    const zipcode = document.getElementById('zipcode').value.trim();
     const message = document.getElementById('message').value.trim();
+    const planningProcess = contactForm.querySelector('input[name="planning_process"]:checked')?.value;
+    const bestTime = getCheckedValues('best_time[]');
+    const services = getCheckedValues('services[]');
+    const fileInput = document.getElementById('files');
+    const files = fileInput ? Array.from(fileInput.files) : [];
+
+    if (!name || !email || !phone || contactMethod.length === 0 || !zipcode || !message || !planningProcess) {
+      showStatus('Please fill out all required fields and select at least one contact method.', true);
+      return;
+    }
+    if (bestTime.length === 0) {
+      showStatus('Please select at least one best time to contact you.', true);
+      return;
+    }
+    if (services.length === 0) {
+      showStatus('Please select at least one service you are interested in.', true);
+      return;
+    }
+
+    const fileError = validateFiles(files);
+    if (fileError) {
+      showStatus(fileError, true);
+      return;
+    }
 
     if (!supabaseClient) {
       showStatus('Sorry, the contact form is not set up yet. Please email Thom directly.', true);
@@ -166,9 +267,21 @@ if (contactForm) {
     submitBtn.disabled = true;
 
     try {
+      const uploadedFiles = await uploadFiles(files);
       const { error } = await supabaseClient
         .from('contact_submissions')
-        .insert([{ name, email, message }]);
+        .insert([{
+          name,
+          email,
+          phone,
+          contact_method: contactMethod,
+          best_time: bestTime,
+          zipcode,
+          services,
+          planning_process: planningProcess,
+          message,
+          files: uploadedFiles,
+        }]);
 
       if (error) {
         console.error('Contact form submission failed:', error);
@@ -178,6 +291,9 @@ if (contactForm) {
 
       showStatus('Thanks! Thom (and the crew) will be in touch soon.', false);
       contactForm.reset();
+      if (otherServicesOptions) {
+        otherServicesOptions.classList.remove('visible');
+      }
     } catch (err) {
       console.error('Contact form network/exception error:', err);
       showStatus('A network error prevented your message from sending. Please check your connection or email Thom directly.', true);

@@ -28,3 +28,24 @@ create policy "Anyone can submit the contact form"
 -- "42501 permission denied for table contact_submissions" even though the
 -- policy above allows it.
 grant insert on public.contact_submissions to anon;
+
+-- Backward-compatible migration: add contact form v2 fields.
+-- Run this after the table already exists. All new columns are nullable so
+-- existing rows are not broken; the browser enforces required fields.
+alter table public.contact_submissions
+  add column if not exists phone text,
+  add column if not exists contact_method text[],
+  add column if not exists best_time text[],
+  add column if not exists zipcode text,
+  add column if not exists services text[],
+  add column if not exists planning_process text,
+  add column if not exists files jsonb default '[]'::jsonb;
+
+-- Note: the existing INSERT grant and RLS policy still cover the new columns.
+-- If you add a Storage bucket for file uploads, create it in the Supabase UI
+-- and allow anon INSERT/SELECT so the browser can upload sketches/plans.
+--
+-- Migration note: if an earlier version created `contact_method` as `text`,
+-- run this before the new form can insert arrays:
+--   alter table public.contact_submissions
+--     alter column contact_method type text[] using array[contact_method];

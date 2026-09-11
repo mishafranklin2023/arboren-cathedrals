@@ -20,11 +20,43 @@ Deno.serve(async (req) => {
   try {
     const payload = await req.json();
     const record = payload.record ?? {};
-    const { name, email, message } = record;
+    const {
+      name,
+      email,
+      phone,
+      contact_method,
+      best_time,
+      zipcode,
+      services,
+      planning_process,
+      message,
+      files,
+    } = record;
 
     if (!RESEND_API_KEY || !NOTIFY_TO_EMAIL) {
       console.error('Missing RESEND_API_KEY or NOTIFY_TO_EMAIL secret');
       return new Response('Server not configured', { status: 500 });
+    }
+
+    const lines = [];
+    lines.push(`Name: ${name ?? ''}`);
+    lines.push(`Email: ${email ?? ''}`);
+    if (phone) lines.push(`Phone: ${phone}`);
+    if (contact_method?.length) lines.push(`Best way to contact: ${Array.isArray(contact_method) ? contact_method.join(', ') : contact_method}`);
+    if (best_time?.length) lines.push(`Best time: ${best_time.join(', ')}`);
+    if (zipcode) lines.push(`Zipcode: ${zipcode}`);
+    if (services?.length) lines.push(`Services: ${services.join(', ')}`);
+    if (planning_process) lines.push(`Planning stage: ${planning_process}`);
+    lines.push('');
+    lines.push('Message:');
+    lines.push(message ?? '');
+
+    if (files?.length) {
+      lines.push('');
+      lines.push('Attachments:');
+      for (const file of files) {
+        lines.push(file.url ? `${file.name}: ${file.url}` : file.name);
+      }
     }
 
     const res = await fetch('https://api.resend.com/emails', {
@@ -38,7 +70,7 @@ Deno.serve(async (req) => {
         to: NOTIFY_TO_EMAIL,
         reply_to: email,
         subject: `New catio inquiry from ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+        text: lines.join('\n'),
       }),
     });
 

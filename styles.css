@@ -1,25 +1,26 @@
 /* ===== Theme B: Blueprint (Logo Palette) — drafting table / engineering diagram feel =====
    Palette sourced directly from the ArbCatioLogo.png artwork:
-     pitch-black      #151500  (near-black, olive-tinted)
+     pitch-black      #151500  (near-black, olive-tinted) --changed to Deep Forest Green: #0F2F0F
      palm-leaf        #728A50  (muted sage green)
-     red-ochre        #C93E0C  (burnt orange-red)
+     red-ochre        #C93E0C  (burnt orange-red) - changed to #9F0643 for ada contrast
      dark-spruce      #1A4F1A  (deep forest green)
-     olive-wood       #8B774F  (warm tan/khaki)
+     olive-wood       #8B774F  (warm tan/khaki) - changed to #DFC596 for ada contrast
      bitter-chocolate #6D4040  (muted brown-red)
    The palette colors define structural surfaces and accents. Olive-wood text
    is used on alternate surfaces; photo backgrounds use white text and black shadows. */
 :root {
-  --pitch-black: #151500;
+  --deep-forest-green: #0F2F0F;
   --palm-leaf: #728A50;
-  --red-ochre: #C93E0C;
+  --red-ochre: #9F0643;
   --dark-spruce: #1A4F1A;
-  --olive-wood: #8B774F;
+  --olive-wood: #DFC596;
   --bitter-chocolate: #6D4040;
 
   --bg: var(--olive-wood);
   --bg-alt: var(--dark-spruce);
-  --text: #000000;
+  --text: var(--deep-forest-green);
   --text-on-dark: #D5CAB4;
+  --text-on-light: #000000;
   --text-on-photo: #ffffff;
   --photo-text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
   --photo-heading-shadow: 0 3px 8px rgba(0, 0, 0, 0.85);
@@ -43,10 +44,12 @@
   --shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 
   --btn-primary-bg: var(--bitter-chocolate);
-  --btn-primary-text: #000000;
+  --btn-primary-text: #D5CAB4;
   --btn-secondary-bg: var(--dark-spruce);
-  --btn-secondary-text: var(--olive-wood);
+  --btn-secondary-text: #D5CAB4;
   --btn-secondary-border: var(--dark-spruce);
+  --btn-tertiary-bg: #CFCFCF;
+  --btn-tertiary-text: var(--text-on-light);
 
   --press-overlay: rgba(21, 21, 0, 0.39);
 
@@ -58,8 +61,8 @@
 .surface-light {
   background-color: var(--bg);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px);
+    linear-gradient(rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px);
   background-size: 24px 24px;
   color: var(--text);
 }
@@ -89,7 +92,7 @@
   z-index: 0;
 }
 
-.surface-photo > * {
+.surface-photo>* {
   position: relative;
   z-index: 1;
 }
@@ -98,8 +101,8 @@
 body {
   background-color: var(--bg);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px);
+    linear-gradient(rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px);
   background-size: 24px 24px;
 }
 
@@ -131,8 +134,8 @@ h3 {
 .site-header {
   background-color: var(--header-bg);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0.5px, transparent 0.5px);
+    linear-gradient(rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0.5px, transparent 0.5px);
   background-size: 24px 24px;
   border-bottom: 1px solid #000000;
   backdrop-filter: none;
@@ -150,6 +153,12 @@ h3 {
 .surface-photo .carousel-slide,
 .surface-photo .carousel-btn {
   color: var(--text-on-dark);
+}
+
+.surface-dark .btn-tertiary,
+.surface-photo .btn-tertiary {
+  --btn-tertiary-bg: #CFCFCF;
+  --btn-tertiary-text: var(--text-on-light);
 }
 
 .hero {
@@ -205,4 +214,119 @@ h3 {
 
 .build-process a {
   color: var(--accent-2);
+}
+
+.contact-form fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-form legend {
+  font-weight: 400;
+  padding: 0;
+}
+
+.contact-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-form .checkbox-group label,
+.contact-form .radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: var(--body-weight);
+  cursor: pointer;
+}
+
+.contact-form .checkbox-group input[type="checkbox"],
+.contact-form .radio-group input[type="radio"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  margin: 0;
+  accent-color: currentColor;
+}
+
+.contact-form .hint {
+  font-size: 1.375rem;
+  font-weight: var(--body-weight);
+  opacity: 0.85;
+  margin: 0;
+}
+
+.contact-form .conditional-group {
+  display: none;
+  padding-left: 0;
+  border-left: 2px dashed var(--card-border);
+}
+
+.contact-form .conditional-group.visible {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-form .checkbox-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.contact-form .checkbox-row legend {
+  grid-column: 1 / -1;
+}
+
+.contact-form .checkbox-row label {
+  display: inline-flex;
+  justify-content: flex-start;
+}
+
+.contact-form input[type="file"] {
+  padding: 0.75rem 0;
+  border: none;
+  background: transparent;
+  font-size: var(--body-size);
+  font-weight: var(--body-weight);
+  color: inherit;
+}
+
+.contact-form input[type="file"]::file-selector-button {
+  background: var(--btn-tertiary-bg);
+  color: var(--btn-tertiary-text);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  font-family: var(--heading-font);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+.contact-form input[type="file"]::file-selector-button:hover {
+  filter: brightness(1.08);
+}
+
+.contact-form[aria-busy="true"] {
+  opacity: 0.85;
+}
+
+.contact-form[aria-busy="true"] button[type="submit"] {
+  cursor: wait;
+}
+
+@media (max-width: 450px) {
+  .contact-form .checkbox-row {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .contact-form .checkbox-row legend {
+    grid-column: 1;
+  }
 }
