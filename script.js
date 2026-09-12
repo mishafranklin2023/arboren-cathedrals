@@ -31,7 +31,7 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
-function initCarousel({ root, track, prevBtn, nextBtn, dotsContainer, visibleItems = () => 1, wrap = false, swipe = false, gap = 0 }) {
+function initCarousel({ root, track, prevBtn, nextBtn, dotsContainer, visibleItems = () => 1, wrap = false, swipe = false, gap = 0, slotCount = null }) {
   if (!root || !track || !prevBtn || !nextBtn) return;
 
   const slides = Array.from(track.children);
@@ -64,10 +64,12 @@ function initCarousel({ root, track, prevBtn, nextBtn, dotsContainer, visibleIte
   }
 
   function updateLayout() {
-    visible = Math.min(slides.length, visibleItems());
+    const requested = visibleItems();
+    visible = Math.min(slides.length, requested);
+    const basisCount = slotCount && requested >= slotCount ? slotCount : visible;
     const basis = gap
-      ? `calc((100% - ${(visible - 1) * gap}px) / ${visible})`
-      : `${100 / visible}%`;
+      ? `calc((100% - ${(basisCount - 1) * gap}px) / ${basisCount})`
+      : `${100 / basisCount}%`;
     slides.forEach((slide) => { slide.style.flexBasis = basis; });
     goTo(current);
   }
