@@ -442,24 +442,39 @@ section {
 
 .carousel-slide {
   flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-figure {
+  display: table;
+  margin: 0;
+  max-width: 100%;
   background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 0.2rem solid var(--card-bg);
+  border-radius: var(--radius);
 }
 
 .carousel-slide img {
-  width: 100%;
-  height: clamp(280px, 40vw, 600px);
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: clamp(280px, 40vw, 600px);
   object-fit: contain;
-  background: var(--card-bg);
 }
 
 .carousel-caption {
+  display: table-caption;
+  caption-side: bottom;
   margin: 0;
   padding: 0.5rem 1rem;
   text-align: center;
-  vertical-align: middle;
+  background: var(--card-bg);
   color: var(--text-on-dark);
-  font-size: smaller;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-size: 1.05rem;
   font-weight: 200;
 }
 
@@ -938,8 +953,16 @@ section {
     margin-top: 1.5rem;
   }
 
+  .carousel-figure {
+    border-width: 0.15rem;
+  }
+
   .carousel-slide img {
-    height: clamp(200px, 40vh, 360px);
+    max-height: clamp(200px, 40vh, 360px);
+  }
+
+  .carousel-caption {
+    font-size: 0.95rem;
   }
 
   .carousel-btn {
@@ -972,8 +995,16 @@ section {
     height: 32px;
   }
 
+  .carousel-figure {
+    border-width: 0.1rem;
+  }
+
   .carousel-slide img {
-    height: clamp(180px, 35vh, 320px);
+    max-height: clamp(180px, 35vh, 320px);
+  }
+
+  .carousel-caption {
+    font-size: 0.85rem;
   }
 }
 
