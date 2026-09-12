@@ -32,7 +32,7 @@
   --accent-2: #d97b3f;
   --card-bg: #fffaf2;
   --card-border: #e3d3b8;
-  --radius: 10px;
+  --radius: 20px;
   --shadow: 0 6px 18px rgba(15, 47, 15, 0.12);
   --btn-primary-bg: var(--accent-2);
   --btn-primary-text: var(--champagne-mist);
@@ -548,6 +548,7 @@ section {
   border-radius: var(--radius);
   padding: 1.5rem;
   text-align: center;
+  color: var(--text-on-dark);
   box-shadow: var(--shadow);
 }
 

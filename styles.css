@@ -190,6 +190,13 @@ h3 {
   text-align: center;
 }
 
+.catio-infographic {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
 .catio-quote {
   margin: 1rem 2rem;
   text-align: center;
