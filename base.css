@@ -33,7 +33,7 @@
   --card-bg: #fffaf2;
   --card-border: #e3d3b8;
   --radius: 10px;
-  --shadow: 0 6px 18px rgba(58, 44, 34, 0.12);
+  --shadow: 0 6px 18px rgba(15, 47, 15, 0.12);
   --btn-primary-bg: var(--accent-2);
   --btn-primary-text: var(--champagne-mist);
   --btn-primary-border: var(--text);
@@ -457,9 +457,10 @@ section {
   margin: 0;
   padding: 0.5rem 1rem;
   text-align: center;
-  vertical-align: center;
+  vertical-align: middle;
   color: var(--text-on-dark);
-  font-weight: 300;
+  font-size: smaller;
+  font-weight: 200;
 }
 
 .carousel-btn {
@@ -469,10 +470,12 @@ section {
   border-radius: 50%;
   border: 1px solid var(--card-border);
   background: var(--card-bg);
-  color: var(--text);
+  color: var(--text-on-dark);
   font-size: 1.5rem;
+  font-weight: 200;
   line-height: 1;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 .carousel-btn:hover:not(:disabled) {
@@ -656,12 +659,12 @@ section {
   justify-content: center;
 }
 
-.press-card > .btn,
+.press-card>.btn,
 .press-note-cta {
   margin-top: auto;
 }
 
-.press-card > .btn {
+.press-card>.btn {
   align-self: center;
 }
 
