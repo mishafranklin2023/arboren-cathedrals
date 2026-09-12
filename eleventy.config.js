@@ -12,6 +12,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("Dave_Thom-optimized.avif");
   eleventyConfig.addPassthroughCopy("images/catstruction-color-opt.png");
   eleventyConfig.addPassthroughCopy("images/catio-infographic.webp");
+  eleventyConfig.addPassthroughCopy("images/header-pawthorne-proc-crop.webp");
 
   eleventyConfig.addWatchTarget("base.css");
   eleventyConfig.addWatchTarget("styles.css");
