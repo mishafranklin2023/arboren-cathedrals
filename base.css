@@ -316,9 +316,27 @@ section {
   padding-block: 2rem;
 }
 
-.hero-blueprint-img {
+.catstruction-figure {
   width: min(var(--blueprint-max), 100%);
-  transform: rotate(20deg);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-blueprint-img,
+.about-blueprint-img,
+.build-process-blueprint-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  transform: none;
+}
+
+.catstruction-caption {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 /* ---------- About ---------- */
@@ -343,7 +361,7 @@ section {
 .about-blueprint-img {
   width: min(var(--blueprint-max), 100%);
   margin: 0 auto;
-  transform: rotate(-20deg);
+  transform: none;
 }
 
 /* ---------- Build Process ---------- */
@@ -366,7 +384,7 @@ section {
 .build-process-blueprint-img {
   width: min(var(--blueprint-max), 100%);
   margin: 0 auto;
-  transform: rotate(20deg);
+  transform: none;
 }
 
 /* ---------- Gallery ---------- */
